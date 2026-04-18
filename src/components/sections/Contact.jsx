@@ -1,18 +1,7 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Reveal from '../ui/Reveal'
 import { CONTACT_LINKS } from '../../data'
-import emailjs from '@emailjs/browser';
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-
-  emailjs.sendForm('service_y0a3k8a', 'template_m00df3s', e.target, 'q0DNlvZnAH50uwNBf')
-    .then((result) => {
-        alert("Message Sent!");
-    }, (error) => {
-        alert("Send failed...");
-    });
-};
+import emailjs from '@emailjs/browser'
 
 function ContactLink({ icon, label, value, href }) {
   return (
@@ -48,15 +37,38 @@ function ContactLink({ icon, label, value, href }) {
 }
 
 function ContactForm() {
-  const [sent, setSent] = useState(false)
-  const [fields, setFields] = useState({ name: '', email: '', message: '' })
+  const formRef = useRef();
+  const [isSending, setIsSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [fields, setFields] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = () => {
-    if (!fields.name || !fields.email || !fields.message) return
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
-    setFields({ name: '', email: '', message: '' })
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!fields.name || !fields.email || !fields.message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    setIsSending(true);
+
+    emailjs.sendForm(
+      'service_y0a3k8a', 
+      'template_m00df3s', 
+      formRef.current, 
+      'q0DNlvZnAH50uwNBf'
+    )
+    .then((result) => {
+        setSent(true);
+        setIsSending(false);
+        setFields({ name: '', email: '', message: '' });
+        setTimeout(() => setSent(false), 5000);
+    }, (error) => {
+        setIsSending(false);
+        alert("Transmission failed. Please try again later.");
+        console.error("EmailJS Error:", error);
+    });
+  };
 
   const inputStyle = {
     width: '100%',
@@ -78,7 +90,9 @@ function ContactForm() {
   }
 
   return (
-    <div
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
       className="rounded-lg p-10"
       style={{
         background: 'rgba(6,35,64,0.6)',
@@ -88,54 +102,57 @@ function ContactForm() {
       <p className="font-syne font-bold text-[18px] text-glow mb-7">// Compose your message</p>
 
       {[
-        { label: 'Identifier (Name)',       key: 'name',    type: 'text',  placeholder: 'Your name',         rows: null },
-        { label: 'Signal Address (Email)',  key: 'email',   type: 'email', placeholder: 'your@email.com',    rows: null },
-        { label: 'Transmission (Message)', key: 'message', type: null,    placeholder: 'What are you building?', rows: 5 },
+        { label: 'Identifier (Name)', key: 'name', type: 'text', placeholder: 'Your name', name: 'from_name' },
+        { label: 'Signal Address (Email)', key: 'email', type: 'email', placeholder: 'your@email.com', name: 'reply_to' },
+        { label: 'Transmission (Message)', key: 'message', type: null, placeholder: 'What are you building?', name: 'message', rows: 5 },
       ].map(field => (
         <div key={field.key} className="mb-5">
-          <label
-            className="block text-[10px] tracking-[0.2em] uppercase text-muted mb-2"
-          >
+          <label className="block text-[10px] tracking-[0.2em] uppercase text-muted mb-2">
             {field.label}
           </label>
           {field.rows ? (
             <textarea
+              name={field.name}
               rows={field.rows}
               placeholder={field.placeholder}
               value={fields[field.key]}
               onChange={e => setFields(f => ({ ...f, [field.key]: e.target.value }))}
               style={inputStyle}
-              onFocus={e  => Object.assign(e.target.style, focusStyle)}
-              onBlur={e   => { e.target.style.borderColor = ''; e.target.style.background = '' }}
+              onFocus={e => Object.assign(e.target.style, focusStyle)}
+              onBlur={e => { e.target.style.borderColor = ''; e.target.style.background = '' }}
             />
           ) : (
             <input
+              name={field.name}
               type={field.type}
               placeholder={field.placeholder}
               value={fields[field.key]}
               onChange={e => setFields(f => ({ ...f, [field.key]: e.target.value }))}
               style={inputStyle}
-              onFocus={e  => Object.assign(e.target.style, focusStyle)}
-              onBlur={e   => { e.target.style.borderColor = ''; e.target.style.background = '' }}
+              onFocus={e => Object.assign(e.target.style, focusStyle)}
+              onBlur={e => { e.target.style.borderColor = ''; e.target.style.background = '' }}
             />
           )}
         </div>
       ))}
 
       <button
-        onClick={handleSubmit}
+        type="submit"
+        disabled={isSending}
         className="hoverable w-full py-4 font-syne font-bold text-[13px] tracking-[0.15em] uppercase text-abyss rounded transition-all duration-200"
         style={{
           background: sent
             ? 'linear-gradient(135deg, #00ffcc, #00d4ff)'
             : 'linear-gradient(135deg, #00d4ff, #00ffcc)',
+          opacity: isSending ? 0.7 : 1,
+          cursor: isSending ? 'not-allowed' : 'pointer'
         }}
-        onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 40px rgba(0,212,255,0.4)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+        onMouseEnter={e => { if(!isSending) { e.currentTarget.style.boxShadow = '0 0 40px rgba(0,212,255,0.4)'; e.currentTarget.style.transform = 'translateY(-2px)' } }}
         onMouseLeave={e => { e.currentTarget.style.boxShadow = ''; e.currentTarget.style.transform = '' }}
       >
-        {sent ? 'Signal Sent ✓' : 'Transmit →'}
+        {isSending ? 'Sending...' : sent ? 'Signal Sent ✓' : 'Transmit →'}
       </button>
-    </div>
+    </form>
   )
 }
 
