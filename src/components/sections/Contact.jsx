@@ -1,6 +1,18 @@
 import { useState } from 'react'
 import Reveal from '../ui/Reveal'
 import { CONTACT_LINKS } from '../../data'
+import emailjs from '@emailjs/browser';
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  emailjs.sendForm('service_y0a3k8a', 'template_m00df3s', e.target, 'q0DNlvZnAH50uwNBf')
+    .then((result) => {
+        alert("Message Sent!");
+    }, (error) => {
+        alert("Send failed...");
+    });
+};
 
 function ContactLink({ icon, label, value, href }) {
   return (

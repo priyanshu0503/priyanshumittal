@@ -174,7 +174,7 @@ export const LEADERSHIP = [
 
 export const CONTACT_LINKS = [
   { label: 'priyanshu625@yahoo.com', sub: 'Email · University',  href: 'mailto:mittal-p8@webmail.uwinnipeg.ca' },
-  { label: 'linkedin.com/in/priyanshumittall', sub: 'LinkedIn · Connect', href: 'https://linkedin.com/in/priyanshumittal' },
+  { label: 'linkedin.com/in/priyanshumittall', sub: 'LinkedIn · Connect', href: 'https://linkedin.com/in/priyanshumittall' },
   { label: '431-998-2561',                    sub: 'Phone · Winnipeg',   href: 'tel:4319982561' },
   { label: 'github.com/priyanshu0503',       sub: 'GitHub · Code',     href: 'https://github.com/priyanshu0503'},
 ]
