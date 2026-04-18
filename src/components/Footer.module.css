@@ -1,0 +1,15 @@
+.footer {
+  padding: 36px var(--section-pad-x);
+  border-top: 1px solid rgba(34,211,238,.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.copy   { font-size: 11px; color: var(--c-dim); letter-spacing: .08em; }
+.copy span { color: var(--c-cyan); }
+.status { font-size: 10px; letter-spacing: .2em; color: var(--c-dim); text-transform: uppercase; }
+.status span { color: var(--c-cyan); }
+
+@media (max-width: 900px) {
+  .footer { flex-direction: column; gap: 10px; text-align: center; }
+}

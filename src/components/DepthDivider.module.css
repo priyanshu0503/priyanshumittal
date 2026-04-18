@@ -1,0 +1,20 @@
+.divider {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 64px;
+}
+.meter {
+  font-size: 10px; letter-spacing: .3em;
+  color: var(--c-cyan);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(34,211,238,.4), transparent);
+}
+.label {
+  font-family: var(--font-display);
+  font-size: 10px; letter-spacing: .3em;
+  color: var(--c-dim); text-transform: uppercase;
+  white-space: nowrap;
+}

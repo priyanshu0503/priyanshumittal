@@ -1,0 +1,27 @@
+.dot {
+  width: 8px; height: 8px;
+  background: var(--c-cyan);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 12px var(--c-cyan), 0 0 24px var(--c-cyan);
+}
+
+.ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(34,211,238,.4);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9998;
+  transition: width .15s, height .15s, background .15s, border-color .15s;
+}
+
+.hov {
+  width: 44px; height: 44px;
+  background: rgba(34,211,238,.06);
+  border-color: rgba(34,211,238,.7);
+}

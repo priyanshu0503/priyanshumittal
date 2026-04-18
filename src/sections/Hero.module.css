@@ -1,0 +1,140 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px var(--section-pad-x) 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Tag ── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--c-cyan);
+  margin-bottom: 28px;
+}
+.tagDot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--c-cyan);
+  box-shadow: 0 0 8px var(--c-cyan);
+  animation: pulse 2s ease infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--c-cyan); }
+  50%       { box-shadow: 0 0 18px var(--c-cyan); }
+}
+
+/* ── Name ── */
+.name {
+  font-family: var(--font-display);
+  font-size: clamp(54px, 8vw, 96px);
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -.03em;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.nameSolid   { color: var(--c-white); }
+.nameOutline {
+  -webkit-text-stroke: 1px rgba(34,211,238,.5);
+  color: transparent;
+}
+.nameAccent {
+  color: var(--c-cyan);
+  -webkit-text-stroke: 0;
+}
+
+/* ── Pills ── */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.pill {
+  padding: 6px 16px;
+  border: 1px solid rgba(34,211,238,.25);
+  border-radius: 99px;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--c-biolum);
+  background: rgba(14,116,144,.1);
+}
+
+/* ── Bio ── */
+.bio {
+  max-width: 500px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--c-muted);
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Depth label ── */
+.depthLabel {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-size: 10px;
+  letter-spacing: .3em;
+  color: var(--c-dim);
+  text-transform: uppercase;
+}
+.depthLabel span {
+  color: var(--c-cyan);
+  font-size: 13px;
+  writing-mode: horizontal-tb;
+  transform: rotate(180deg);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ── Scroll hint ── */
+.scrollHint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.scrollLine {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--c-cyan), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: .3; }
+  50%       { opacity: 1; }
+}
+.scrollText {
+  font-size: 9px;
+  letter-spacing: .3em;
+  color: var(--c-dim);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .hero        { padding: 100px var(--section-pad-x) 80px; }
+  .depthLabel  { display: none; }
+}

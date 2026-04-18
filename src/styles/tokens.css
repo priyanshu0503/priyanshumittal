@@ -1,0 +1,34 @@
+/* ── DESIGN TOKENS ── */
+:root {
+  /* Colors */
+  --c-bg:      #020d1a;
+  --c-surface: #041225;
+  --c-ocean:   #061e35;
+  --c-teal:    #0e7490;
+  --c-cyan:    #22d3ee;
+  --c-glow:    #67e8f9;
+  --c-biolum:  #a5f3fc;
+  --c-white:   #f0f9ff;
+  --c-muted:   #7cb8cc;
+  --c-dim:     #3a7a8c;
+
+  /* Typography */
+  --font-display: 'Syne', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* Spacing */
+  --section-pad-x: 48px;
+  --section-pad-y: 100px;
+
+  /* Borders */
+  --border-subtle:  1px solid rgba(34,211,238,0.10);
+  --border-mid:     1px solid rgba(34,211,238,0.25);
+  --border-strong:  1px solid rgba(34,211,238,0.45);
+}
+
+@media (max-width: 900px) {
+  :root {
+    --section-pad-x: 24px;
+    --section-pad-y: 80px;
+  }
+}
